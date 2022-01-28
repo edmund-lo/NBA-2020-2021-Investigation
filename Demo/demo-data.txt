@@ -1,0 +1,233 @@
+psql (10.19 (Ubuntu 10.19-0ubuntu0.18.04.1), server 10.18 (Ubuntu 10.18-0ubuntu0.18.04.1))
+Type "help" for help.
+
+
+--- (a) Load schema and data --------------------------------------------------
+
+
+csc343h-lvzexi=> \i schema.sql
+psql:schema.sql:1: NOTICE:  drop cascades to 5 other objects
+DETAIL:  drop cascades to type nba.percentage
+drop cascades to table nba.team
+drop cascades to table nba.player
+drop cascades to table nba.game
+drop cascades to table nba.coach
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE DOMAIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+csc343h-lvzexi=> \i data.sql
+COPY 30
+COPY 626
+COPY 1171
+COPY 32
+
+
+--- (b) Run \d on each table --------------------------------------------------
+
+
+csc343h-lvzexi=> \d Team
+                      Table "nba.team"
+ Column |       Type       | Collation | Nullable | Default
+--------+------------------+-----------+----------+---------
+ tid    | text             |           | not null |
+ city   | text             |           | not null |
+ name   | text             |           | not null |
+ wins   | integer          |           | not null |
+ losses | integer          |           | not null |
+ W/L%   | percentage       |           | not null |
+ fg     | double precision |           | not null |
+ fga    | double precision |           | not null |
+ FG%    | percentage       |           | not null |
+ 3P     | double precision |           | not null |
+ 3PA    | double precision |           | not null |
+ 3P%    | percentage       |           | not null |
+ 2P     | double precision |           | not null |
+ 2PA    | double precision |           | not null |
+ 2P%    | percentage       |           | not null |
+ ft     | double precision |           | not null |
+ fta    | double precision |           | not null |
+ FT%    | percentage       |           | not null |
+ orb    | double precision |           | not null |
+ drb    | double precision |           | not null |
+ trb    | double precision |           | not null |
+ ast    | double precision |           | not null |
+ stl    | double precision |           | not null |
+ blk    | double precision |           | not null |
+ tov    | double precision |           | not null |
+ pf     | double precision |           | not null |
+ pts    | double precision |           | not null |
+Indexes:
+    "team_pkey" PRIMARY KEY, btree (tid)
+Referenced by:
+    TABLE "coach" CONSTRAINT "coach_tid_fkey" FOREIGN KEY (tid) REFERENCES team(tid)
+    TABLE "game" CONSTRAINT "game_tidaway_fkey" FOREIGN KEY (tidaway) REFERENCES team(tid)
+    TABLE "game" CONSTRAINT "game_tidhome_fkey" FOREIGN KEY (tidhome) REFERENCES team(tid)
+    TABLE "player" CONSTRAINT "player_tid_fkey" FOREIGN KEY (tid) REFERENCES team(tid)
+
+csc343h-lvzexi=> \d Player
+                      Table "nba.player"
+  Column   |       Type       | Collation | Nullable | Default
+-----------+------------------+-----------+----------+---------
+ pid       | integer          |           | not null |
+ firstname | text             |           | not null |
+ lastname  | text             |           | not null |
+ tid       | text             |           | not null |
+ position  | text             |           | not null |
+ age       | integer          |           | not null |
+ g         | integer          |           | not null |
+ gs        | integer          |           | not null |
+ mp        | double precision |           | not null |
+ fg        | double precision |           | not null |
+ fga       | double precision |           | not null |
+ FG%       | percentage       |           | not null |
+ 3P        | double precision |           | not null |
+ 3PA       | double precision |           | not null |
+ 3P%       | percentage       |           | not null |
+ 2P        | double precision |           | not null |
+ 2PA       | double precision |           | not null |
+ 2P%       | percentage       |           | not null |
+ eFG%      | percentage       |           | not null |
+ ft        | double precision |           | not null |
+ fta       | double precision |           | not null |
+ FT%       | percentage       |           | not null |
+ orb       | double precision |           | not null |
+ drb       | double precision |           | not null |
+ trb       | double precision |           | not null |
+ ast       | double precision |           | not null |
+ stl       | double precision |           | not null |
+ blk       | double precision |           | not null |
+ tov       | double precision |           | not null |
+ pf        | double precision |           | not null |
+ pts       | double precision |           | not null |
+Indexes:
+    "player_pkey" PRIMARY KEY, btree (pid)
+Foreign-key constraints:
+    "player_tid_fkey" FOREIGN KEY (tid) REFERENCES team(tid)
+
+csc343h-lvzexi=> \d Game
+                   Table "nba.game"
+   Column   |  Type   | Collation | Nullable | Default
+------------+---------+-----------+----------+---------
+ gid        | integer |           | not null |
+ date       | date    |           | not null |
+ tidhome    | text    |           |          |
+ pointshome | integer |           | not null |
+ tidaway    | text    |           |          |
+ pointsaway | integer |           | not null |
+Indexes:
+    "game_pkey" PRIMARY KEY, btree (gid)
+Foreign-key constraints:
+    "game_tidaway_fkey" FOREIGN KEY (tidaway) REFERENCES team(tid)
+    "game_tidhome_fkey" FOREIGN KEY (tidhome) REFERENCES team(tid)
+
+csc343h-lvzexi=> \d Coach
+                     Table "nba.coach"
+     Column     |  Type   | Collation | Nullable | Default
+----------------+---------+-----------+----------+---------
+ cid            | integer |           | not null |
+ firstname      | text    |           | not null |
+ lastname       | text    |           | not null |
+ tid            | text    |           | not null |
+ seasonsfranch  | integer |           | not null |
+ seasonsoverall | integer |           | not null |
+ reggames       | integer |           | not null |
+ regwins        | integer |           | not null |
+ reglosses      | integer |           | not null |
+ playoffgames   | integer |           | not null |
+ playoffwins    | integer |           | not null |
+ playofflosses  | integer |           | not null |
+Indexes:
+    "coach_pkey" PRIMARY KEY, btree (cid)
+Foreign-key constraints:
+    "coach_tid_fkey" FOREIGN KEY (tid) REFERENCES team(tid)
+
+
+--- (c) Run SELECT count(*) on each table -------------------------------------
+
+
+csc343h-lvzexi=> select count(*) from team;
+ count
+-------
+    30
+(1 row)
+
+csc343h-lvzexi=> select count(*) from player;
+ count
+-------
+   626
+(1 row)
+
+csc343h-lvzexi=> select count(*) from game;
+ count
+-------
+  1171
+(1 row)
+
+csc343h-lvzexi=> select count(*) from coach;
+ count
+-------
+    32
+(1 row)
+
+
+--- (d) Show some rows from each table ----------------------------------------
+
+
+csc343h-lvzexi=> select * from team where tID < 'D';
+ tid |   city    |   name    | wins | losses | W/L%  |  fg  | fga  |  FG%  |  3P  | 3PA  |  3P%  |  2P  | 2PA  |  2P%  |  ft  | fta  |  FT%  | orb  | drb  | trb  | ast  | stl | blk | tov  |  pf  |  pts
+-----+-----------+-----------+------+--------+-------+------+------+-------+------+------+-------+------+------+-------+------+------+-------+------+------+------+------+-----+-----+------+------+-------
+ ATL | Atlanta   | Hawks     |   41 |     31 | 0.569 | 40.8 | 87.2 | 0.468 | 12.4 | 33.4 | 0.373 | 28.4 | 53.9 | 0.526 | 19.7 | 24.2 | 0.812 | 10.6 | 35.1 | 45.6 | 24.1 |   7 | 4.8 | 13.2 | 19.3 | 113.7
+ BOS | Boston    | Celtics   |   36 |     36 |   0.5 | 41.5 | 88.9 | 0.466 | 13.6 | 36.4 | 0.374 | 27.9 | 52.5 |  0.53 | 16.1 | 20.8 | 0.775 | 10.6 | 33.6 | 44.3 | 23.5 | 7.7 | 5.3 | 14.1 | 20.4 | 112.6
+ BRK | Brooklyn  | Nets      |   48 |     24 | 0.667 | 43.1 | 87.3 | 0.494 | 14.2 | 36.1 | 0.392 |   29 | 51.2 | 0.565 | 18.1 | 22.5 | 0.804 |  8.9 | 35.5 | 44.4 | 26.8 | 6.7 | 5.3 | 13.5 |   19 | 118.6
+ CHI | Chicago   | Bulls     |   31 |     41 | 0.431 | 42.2 | 88.6 | 0.476 | 12.6 |   34 |  0.37 | 29.6 | 54.6 | 0.542 | 13.8 | 17.5 | 0.791 |  9.6 | 35.3 |   45 | 26.8 | 6.7 | 4.2 | 15.1 | 18.9 | 110.7
+ CHO | Charlotte | Hornets   |   33 |     39 | 0.458 | 39.9 | 87.8 | 0.455 | 13.7 |   37 | 0.369 | 26.3 | 50.8 | 0.517 | 15.9 | 20.9 | 0.761 | 10.6 | 33.2 | 43.8 | 26.8 | 7.8 | 4.8 | 14.8 |   18 | 109.5
+ CLE | Cleveland | Cavaliers |   22 |     50 | 0.306 | 38.6 | 85.8 |  0.45 |   10 | 29.7 | 0.336 | 28.6 |   56 |  0.51 | 16.7 | 22.4 | 0.743 | 10.4 | 32.3 | 42.8 | 23.8 | 7.8 | 4.5 | 15.5 | 18.2 | 103.8
+(6 rows)
+
+csc343h-lvzexi=> select * from game where gID < 10;
+ gid |    date    | tidhome | pointshome | tidaway | pointsaway
+-----+------------+---------+------------+---------+------------
+   1 | 2020-12-22 | BRK     |        125 | GSW     |         99
+   2 | 2020-12-22 | LAL     |        109 | LAC     |        116
+   3 | 2020-12-23 | CLE     |        121 | CHO     |        114
+   4 | 2020-12-23 | IND     |        121 | NYK     |        107
+   5 | 2020-12-23 | ORL     |        113 | MIA     |        107
+   6 | 2020-12-23 | PHI     |        113 | WAS     |        107
+   7 | 2020-12-23 | TOR     |         99 | NOP     |        113
+   8 | 2020-12-23 | BOS     |        122 | MIL     |        121
+   9 | 2020-12-23 | CHI     |        104 | ATL     |        124
+(9 rows)
+
+csc343h-lvzexi=> select * from player where pID < 10;
+ pid | firstname |     lastname     | tid | position | age | g  | gs |  mp  | fg  | fga  |  FG%  | 3P  | 3PA |  3P%  | 2P  | 2PA  |  2P%  | eFG%  | ft  | fta |  FT%  | orb | drb | trb | ast | stl | blk | tov | pf  | pts
+-----+-----------+------------------+-----+----------+-----+----+----+------+-----+------+-------+-----+-----+-------+-----+------+-------+-------+-----+-----+-------+-----+-----+-----+-----+-----+-----+-----+-----+------
+   1 | Precious  | Achiuwa          | MIA | PF       |  21 | 61 |  4 | 12.1 |   2 |  3.7 | 0.544 |   0 |   0 |     0 |   2 |  3.7 | 0.546 | 0.544 | 0.9 | 1.8 | 0.509 | 1.2 | 2.2 | 3.4 | 0.5 | 0.3 | 0.5 | 0.7 | 1.5 |    5
+   2 | Jaylen    | Adams            | MIL | PG       |  24 |  7 |  0 |  2.6 | 0.1 |  1.1 | 0.125 |   0 | 0.3 |     0 | 0.1 |  0.9 | 0.167 | 0.125 |   0 |   0 |     0 |   0 | 0.4 | 0.4 | 0.3 |   0 |   0 |   0 | 0.1 |  0.3
+   3 | Steven    | Adams            | NOP | C        |  27 | 58 | 58 | 27.7 | 3.3 |  5.3 | 0.614 |   0 | 0.1 |     0 | 3.3 |  5.3 |  0.62 | 0.614 |   1 | 2.3 | 0.444 | 3.7 | 5.2 | 8.9 | 1.9 | 0.9 | 0.7 | 1.3 | 1.9 |  7.6
+   4 | Bam       | Adebayo          | MIA | C        |  23 | 64 | 64 | 33.5 | 7.1 | 12.5 |  0.57 |   0 | 0.1 |  0.25 | 7.1 | 12.4 | 0.573 | 0.571 | 4.4 | 5.5 | 0.799 | 2.2 | 6.7 |   9 | 5.4 | 1.2 |   1 | 2.6 | 2.3 | 18.7
+   6 | LaMarcus  | Aldridge         | SAS | C        |  35 | 21 | 18 | 25.9 | 5.5 | 11.8 | 0.464 | 1.3 | 3.6 |  0.36 | 4.2 |  8.2 | 0.509 | 0.518 | 1.5 | 1.8 | 0.838 | 0.8 | 3.7 | 4.5 | 1.7 | 0.4 | 0.9 |   1 | 1.7 | 13.7
+   7 | LaMarcus  | Aldridge         | BRK | C        |  35 |  5 |  5 |   26 |   5 |  9.6 | 0.521 | 0.8 |   1 |   0.8 | 4.2 |  8.6 | 0.488 | 0.563 |   2 |   2 |     1 | 0.4 | 4.4 | 4.8 | 2.6 | 0.6 | 2.2 | 1.4 | 2.2 | 12.8
+   8 | Ty-Shon   | Alexander        | PHO | SG       |  22 | 15 |  0 |  3.1 | 0.2 |  0.8 |  0.25 | 0.1 | 0.6 | 0.222 | 0.1 |  0.2 | 0.333 | 0.333 | 0.1 | 0.1 |   0.5 | 0.1 | 0.5 | 0.7 | 0.4 |   0 | 0.1 | 0.2 | 0.1 |  0.6
+   9 | Nickeil   | Alexander-Walker | NOP | SG       |  22 | 46 | 13 | 21.9 | 4.2 |   10 | 0.419 | 1.7 | 4.8 | 0.347 | 2.5 |  5.2 | 0.485 | 0.502 |   1 | 1.4 | 0.727 | 0.3 | 2.8 | 3.1 | 2.2 |   1 | 0.5 | 1.5 | 1.9 |   11
+(8 rows)
+
+csc343h-lvzexi=> select * from coach where cID < 10;
+ cid | firstname |  lastname   | tid | seasonsfranch | seasonsoverall | reggames | regwins | reglosses | playoffgames | playoffwins | playofflosses
+-----+-----------+-------------+-----+---------------+----------------+----------+---------+-----------+--------------+-------------+---------------
+   1 | Lloyd     | Pierce      | ATL |             3 |              3 |       34 |      14 |        20 |           18 |          10 |             8
+   2 | Nate      | McMillan    | ATL |             1 |             17 |       38 |      27 |        11 |           18 |          10 |             8
+   3 | Brad      | Stevens     | BOS |             8 |              8 |       72 |      36 |        36 |            5 |           1 |             4
+   4 | Steve     | Nash        | BRK |             1 |              1 |       72 |      48 |        24 |           12 |           7 |             5
+   5 | Billy     | Donovan     | CHI |             1 |              6 |       72 |      31 |        41 |            0 |           0 |             0
+   6 | James     | Borrego     | CHO |             3 |              4 |       72 |      33 |        39 |            0 |           0 |             0
+   7 | J.B.      | Bickerstaff | CLE |             2 |              5 |       72 |      22 |        50 |            0 |           0 |             0
+   8 | Rick      | Carlisle    | DAL |            13 |             19 |       72 |      42 |        30 |            7 |           3 |             4
+   9 | Michael   | Malone      | DEN |             6 |              8 |       72 |      47 |        25 |           10 |           4 |             6
+(9 rows)
+
+csc343h-lvzexi=>

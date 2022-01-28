@@ -1,0 +1,429 @@
+----------------- Query demo in q1 ---------------
+
+-------------------- Part (a) --------------------
+-- Teams ranked by W/L%
+CREATE VIEW
+-- Top 10 teams by W/L%
+CREATE VIEW
+-- Middle 10 teams by W/L%
+CREATE VIEW
+-- Bottom 10 teams by W/L%
+CREATE VIEW
+-------------------- Part (b) --------------------
+-- Compare average stats of topTeams and bottomTeams
+CREATE VIEW
+-------------------- Part (c) --------------------
+-- Teams ranked by FG%
+CREATE VIEW
+-- FG% ranks for topTeams
+ tid |  FG%  | rank | FG%rank
+-----+-------+------+---------
+ UTA | 0.468 |    1 |      14
+ PHO |  0.49 |    2 |       2
+ PHI | 0.476 |    3 |       8
+ BRK | 0.494 |    4 |       1
+ DEN | 0.485 |    5 |       4
+ LAC | 0.482 |    5 |       5
+ MIL | 0.487 |    7 |       3
+ DAL |  0.47 |    8 |      13
+ POR | 0.453 |    8 |      23
+ LAL | 0.472 |    8 |      12
+(10 rows)
+
+-- FG% ranks for bottomTeams
+ tid |  FG%  | rank | FG%rank
+-----+-------+------+---------
+ NOP | 0.477 |   21 |       7
+ CHI | 0.476 |   21 |       8
+ SAC | 0.481 |   21 |       6
+ TOR | 0.448 |   24 |      26
+ MIN | 0.448 |   25 |      26
+ CLE |  0.45 |   26 |      25
+ OKC | 0.441 |   26 |      29
+ ORL | 0.429 |   28 |      30
+ DET | 0.452 |   29 |      24
+ HOU | 0.444 |   30 |      28
+(10 rows)
+
+-- Teams ranked by 3P%
+CREATE VIEW
+-- 3P% ranks for topTeams
+ tid |  3P%  | rank | 3P%rank
+-----+-------+------+---------
+ UTA | 0.389 |    1 |       4
+ PHO | 0.378 |    2 |       7
+ PHI | 0.374 |    3 |      10
+ BRK | 0.392 |    4 |       2
+ DEN | 0.377 |    5 |       8
+ LAC | 0.411 |    5 |       1
+ MIL | 0.389 |    7 |       4
+ LAL | 0.354 |    8 |      21
+ POR | 0.385 |    8 |       6
+ DAL | 0.362 |    8 |      18
+(10 rows)
+
+-- 3P% ranks for bottomTeams
+ tid |  3P%  | rank | 3P%rank
+-----+-------+------+---------
+ SAC | 0.364 |   21 |      16
+ CHI |  0.37 |   21 |      13
+ NOP | 0.348 |   21 |      26
+ TOR | 0.368 |   24 |      15
+ MIN | 0.349 |   25 |      25
+ OKC | 0.339 |   26 |      28
+ CLE | 0.336 |   26 |      30
+ ORL | 0.343 |   28 |      27
+ DET | 0.351 |   29 |      22
+ HOU | 0.339 |   30 |      28
+(10 rows)
+
+-------------------- Part (d) --------------------
+-- Ranks for all team stats
+CREATE VIEW
+-- Differentials between W/L% ranking and stat ranking
+CREATE VIEW
+-- Average differentials between W/L% ranking and stat ranking
+CREATE VIEW
+        adfg        |        adfga        |       adFG%
+--------------------+---------------------+--------------------
+ 7.0333333333333333 | 11.4000000000000000 | 4.8333333333333333
+(1 row)
+
+        ad3P        |       ad3PA        |       ad3P%
+--------------------+--------------------+--------------------
+ 7.6000000000000000 | 9.1333333333333333 | 4.7666666666666667
+(1 row)
+
+        ad2P        |        ad2PA        |       ad2P%
+--------------------+---------------------+--------------------
+ 9.5000000000000000 | 11.1666666666666667 | 6.5333333333333333
+(1 row)
+
+        adft        |        adfta        |       adFT%
+--------------------+---------------------+--------------------
+ 9.9333333333333333 | 11.4666666666666667 | 6.2000000000000000
+(1 row)
+
+        adorb        |       addrb        |       adtrb
+---------------------+--------------------+--------------------
+ 10.7333333333333333 | 8.0666666666666667 | 8.1333333333333333
+(1 row)
+
+       adast        |        adstl        |       adblk
+--------------------+---------------------+--------------------
+ 9.4666666666666667 | 10.4333333333333333 | 9.9666666666666667
+(1 row)
+
+        adtov        |        adpf         |       adpts
+---------------------+---------------------+--------------------
+ 11.8333333333333333 | 10.2000000000000000 | 5.6000000000000000
+(1 row)
+
+-- Smallest average differentials
+-- FG%, 3P%, PTS
+-------------------- Part (e) --------------------
+-- Players ranked by PTS per game
+CREATE VIEW
+-- Teams that have a leading scorer
+ tid | pid | firstname |   lastname    | pts  | ptsrank
+-----+-----+-----------+---------------+------+---------
+ GSW | 135 | Stephen   | Curry         |   32 |       1
+ WAS |  42 | Bradley   | Beal          | 31.3 |       2
+ POR | 349 | Damian    | Lillard       | 28.8 |       3
+ PHI | 169 | Joel      | Embiid        | 28.5 |       4
+ MIL |  15 | Giannis   | Antetokounmpo | 28.1 |       5
+ DAL | 152 | Luka      | Dončić        | 27.7 |       6
+ CHI | 336 | Zach      | LaVine        | 27.4 |       7
+ NOP | 612 | Zion      | Williamson    |   27 |       8
+ BRK | 163 | Kevin     | Durant        | 26.9 |       9
+ BRK | 281 | Kyrie     | Irving        | 26.9 |       9
+ BOS | 545 | Jayson    | Tatum         | 26.4 |      11
+ DEN | 304 | Nikola    | Jokić         | 26.4 |      11
+ UTA | 403 | Donovan   | Mitchell      | 26.4 |      11
+ PHO |  65 | Devin     | Booker        | 25.6 |      14
+(14 rows)
+
+-- Leading scorers on topTeams
+ tid | pid | firstname |   lastname    | pts  | ptsrank
+-----+-----+-----------+---------------+------+---------
+ POR | 349 | Damian    | Lillard       | 28.8 |       3
+ PHI | 169 | Joel      | Embiid        | 28.5 |       4
+ MIL |  15 | Giannis   | Antetokounmpo | 28.1 |       5
+ DAL | 152 | Luka      | Dončić        | 27.7 |       6
+ BRK | 163 | Kevin     | Durant        | 26.9 |       9
+ BRK | 281 | Kyrie     | Irving        | 26.9 |       9
+ DEN | 304 | Nikola    | Jokić         | 26.4 |      11
+ UTA | 403 | Donovan   | Mitchell      | 26.4 |      11
+ PHO |  65 | Devin     | Booker        | 25.6 |      14
+(9 rows)
+
+-- Leading scorers on bottomTeams
+ tid | pid | firstname |  lastname  | pts  | ptsrank
+-----+-----+-----------+------------+------+---------
+ CHI | 336 | Zach      | LaVine     | 27.4 |       7
+ NOP | 612 | Zion      | Williamson |   27 |       8
+(2 rows)
+
+-- 8 of topTeams had a top 15 scorer
+-- Only 2 of bottomTeams had a top 15 scorer
+-------------------- Part (f) --------------------
+-- Average age of players on each team
+CREATE VIEW
+-- Teams ranked by age from oldest to youngest
+CREATE VIEW
+-- Compare average age of top and bottom groups
+ group  |         avg         |         avg
+--------+---------------------+---------------------
+ bottom | 25.0333798701298701 | 20.3000000000000000
+ top    | 26.6522187958464712 |  7.5000000000000000
+(2 rows)
+
+-- Differentials between W/L% ranking and age ranking
+CREATE VIEW
+-- Average differential between W/L% ranking and age ranking
+       adage
+--------------------
+ 6.2666666666666667
+(1 row)
+
+
+----------------- Query demo in q2 ---------------
+
+----- (g) Average points for top players of each statistic ------
+
+SELECT avg(pts) FROM player;
+       avg
+------------------
+ 8.71597444089457
+(1 row)
+
+SELECT avg(pts) FROM (SELECT * FROM player ORDER BY "pts" desc limit 20) x;
+  avg
+--------
+ 26.965
+(1 row)
+
+SELECT avg(pts) as "mp_avg" FROM (SELECT * FROM player ORDER BY "mp" desc limit 20) x;
+ mp_avg
+--------
+ 23.525
+(1 row)
+
+SELECT avg(pts) as "fg_avg" FROM (SELECT * FROM player ORDER BY "fg" desc limit 20) x;
+ fg_avg
+--------
+ 26.895
+(1 row)
+
+SELECT avg(pts) as "fga_avg" FROM (SELECT * FROM player ORDER BY "fga" desc limit 20) x;
+ fga_avg
+---------
+  25.445
+(1 row)
+
+SELECT avg(pts) as "FG%_avg" FROM (SELECT * FROM player ORDER BY "FG%" desc limit 20) x;
+ FG%_avg
+---------
+    5.85
+(1 row)
+
+SELECT avg(pts) as "3P_avg" FROM (SELECT * FROM player ORDER BY "3P" desc limit 20) x;
+ 3P_avg
+--------
+ 19.635
+(1 row)
+
+SELECT avg(pts) as "3PA_avg" FROM (SELECT * FROM player ORDER BY "3PA" desc limit 20) x;
+ 3PA_avg
+---------
+  21.005
+(1 row)
+
+SELECT avg(pts) as "3P%_avg" FROM (SELECT * FROM player ORDER BY "3P%" desc limit 20) x;
+ 3P%_avg
+---------
+   4.885
+(1 row)
+
+SELECT avg(pts) as "2P_avg" FROM (SELECT * FROM player ORDER BY "2P" desc limit 20) x;
+ 2P_avg
+--------
+ 24.715
+(1 row)
+
+SELECT avg(pts) as "2PA_avg" FROM (SELECT * FROM player ORDER BY "2PA" desc limit 20) x;
+ 2PA_avg
+---------
+   24.39
+(1 row)
+
+SELECT avg(pts) as "2P%_avg" FROM (SELECT * FROM player ORDER BY "2P%" desc limit 20) x;
+ 2P%_avg
+---------
+    3.94
+(1 row)
+
+SELECT avg(pts) as "eFG%_avg" FROM (SELECT * FROM player ORDER BY "eFG%" desc limit 20) x;
+ eFG%_avg
+----------
+    5.485
+(1 row)
+
+SELECT avg(pts) as "ft_avg" FROM (SELECT * FROM player ORDER BY "ft" desc limit 20) x;
+ ft_avg
+--------
+  26.02
+(1 row)
+
+SELECT avg(pts) as "fta_avg" FROM (SELECT * FROM player ORDER BY "fta" desc limit 20) x;
+ fta_avg
+---------
+  25.735
+(1 row)
+
+SELECT avg(pts) as "FT%_avg" FROM (SELECT * FROM player ORDER BY "FT%" desc limit 20) x;
+ FT%_avg
+---------
+   4.475
+(1 row)
+
+SELECT avg(pts) as "orb_avg" FROM (SELECT * FROM player ORDER BY "orb" desc limit 20) x;
+ orb_avg
+---------
+  13.775
+(1 row)
+
+SELECT avg(pts) as "drb_avg" FROM (SELECT * FROM player ORDER BY "drb" desc limit 20) x;
+ drb_avg
+---------
+  20.325
+(1 row)
+
+SELECT avg(pts) as "trb_avg" FROM (SELECT * FROM player ORDER BY "trb" desc limit 20) x;
+ trb_avg
+---------
+   18.89
+(1 row)
+
+SELECT avg(pts) as "ast_avg" FROM (SELECT * FROM player ORDER BY "ast" desc limit 20) x;
+ ast_avg
+---------
+   20.26
+(1 row)
+
+SELECT avg(pts) as "stl_avg" FROM (SELECT * FROM player ORDER BY "stl" desc limit 20) x;
+ stl_avg
+---------
+   14.75
+(1 row)
+
+SELECT avg(pts) as "blk_avg" FROM (SELECT * FROM player ORDER BY "blk" desc limit 20) x;
+ blk_avg
+---------
+  12.825
+(1 row)
+
+SELECT avg(pts) as "tov_avg" FROM (SELECT * FROM player ORDER BY "tov" desc limit 20) x;
+ tov_avg
+---------
+   21.96
+(1 row)
+
+SELECT avg(pts) as "pf_avg" FROM (SELECT * FROM player ORDER BY "pf" desc limit 20) x;
+ pf_avg
+--------
+ 14.475
+(1 row)
+
+
+------ (h) Attempts vs Accuracy ------------------------------
+
+SELECT avg("2PA") FROM player;
+       avg
+------------------
+ 4.26789137380192
+(1 row)
+
+SELECT avg("2PA") FROM (SELECT * FROM player ORDER BY "2P%" desc limit 20) x;
+  avg
+-------
+ 1.595
+(1 row)
+
+SELECT avg("fga") FROM player;
+       avg
+-----------------
+ 7.0076677316294
+(1 row)
+
+SELECT avg("fga") FROM (SELECT * FROM player ORDER BY "FG%" desc limit 20) x;
+ avg
+------
+ 3.32
+(1 row)
+
+
+----------------- Query demo in q3 --------------------------
+
+----------- (i) Coach experience on team success ---------------------------
+
+SELECT avg(seasonsoverall) FROM coach WHERE playoffgames > 0;
+
+        avg
+--------------------
+ 9.6470588235294118
+(1 row)
+
+
+SELECT avg(seasonsoverall) FROM coach WHERE playoffgames = 0;
+
+        avg
+--------------------
+ 6.3333333333333333
+(1 row)
+
+
+SELECT avg(seasonsoverall) FROM coach WHERE tid in (SELECT tid FROM topteams);
+
+         avg
+---------------------
+ 10.0000000000000000
+(1 row)
+
+
+SELECT avg(seasonsoverall) FROM coach WHERE tid in (SELECT tid FROM middleteams);
+
+        avg
+--------------------
+ 9.1818181818181818
+(1 row)
+
+
+SELECT avg(seasonsoverall) FROM coach WHERE tid in (SELECT tid FROM bottomteams);
+
+        avg
+--------------------
+ 5.2727272727272727
+(1 row)
+
+----------- (j) experience of coach and players-----------------------------
+
+CREATE VIEW TopPlayers as (SELECT * FROM player ORDER BY PTS desc LIMIT 20);
+CREATE VIEW
+
+SELECT avg(seasonsoverall) FROM coach WHERE tid in (SELECT tid FROM TopPlayers);
+        avg
+--------------------
+ 8.3809523809523810
+(1 row)
+
+
+CREATE VIEW ExperiencedCoaches as (SELECT * FROM coach ORDER BY seasonsoverall desc LIMIT 10);
+CREATE VIEW
+
+SELECT avg(pts) FROM player WHERE tid in (SELECT tid FROM experiencedcoaches);
+
+       avg
+------------------
+ 8.55656565656566
+(1 row)
